@@ -82,13 +82,22 @@ namespace BinaryTree
         public IEnumerable<T> ReadTopToBottom()
         {
             return
-                from i in Enumerable.Range(1, this.CalculateDepth())
-                let valuesAtLevel = ReadAtLevel(this, 1, i)
+                from i in Enumerable.Range(1, CalculateDepth())
+                let valuesAtLevel = ReadAtLevel(i)
+                from value in valuesAtLevel
+                select value;
+        }
+        
+        public IEnumerable<T> ReadBottomToTop()
+        {
+            return
+                from i in Enumerable.Range(1, CalculateDepth()).Reverse()
+                let valuesAtLevel = ReadAtLevel(i)
                 from value in valuesAtLevel
                 select value;
         }
 
-        public IEnumerable<T> ReadAtLevel(int level)
+        private IEnumerable<T> ReadAtLevel(int level)
         {
             return ReadAtLevel(this, 1, level, null);
         }
@@ -108,9 +117,6 @@ namespace BinaryTree
 
         private static IEnumerable<T> ReadAtLevel(Node<T> node, int currentLevel, int targetLevel, List<T> values = null)
         {
-            if (currentLevel > targetLevel)
-                throw new Exception("wtf!?");
-
             values ??= new List<T>();
 
             if (node == null)
