@@ -51,5 +51,15 @@ namespace BinaryTree.Tests
             // assert
             Assert.Equal(new []{"a", "h", "f", "z", "k", "j"}, values);
         }
+
+        [Fact]
+        public void CanTraverseTopToBottom()
+        {
+            // act
+            IEnumerable<string> values = TestTree.ReadTopToBottom();
+
+            // assert
+            Assert.Equal(new []{"j", "f", "k", "a", "h", "z"}, values);
+        }
     }
 }
