@@ -6,10 +6,10 @@ namespace BinaryTree.Tests
 {
     public class NodeTests
     {
-        [Fact]
-        public void CanTraverseInOrder()
+        readonly Node<string> TestTree;
+
+        public NodeTests()
         {
-            // arrange 
             var root = new Node<string>("j"); 
             // left sub-tree
             root.Left = new Node<string>("f");
@@ -19,11 +19,37 @@ namespace BinaryTree.Tests
             root.Right = new Node<string>("k");
             root.Right.Right = new Node<string>("z");
 
+            TestTree = root;
+        }
+
+        [Fact]
+        public void CanTraverseInOrder()
+        {
             // act
-            IEnumerable<string> values = root.ReadInOrder();
+            IEnumerable<string> values = TestTree.ReadInOrder();
 
             // assert
             Assert.Equal(new []{"a", "f", "h", "j", "k", "z"}, values);
+        }
+
+        [Fact]
+        public void CanTraversePreOrder()
+        {
+            // act
+            IEnumerable<string> values = TestTree.ReadPreOrder();
+
+            // assert
+            Assert.Equal(new []{"j", "f", "a", "h", "k", "z"}, values);
+        }
+
+        [Fact]
+        public void CanTraversePostOrder()
+        {
+            // act
+            IEnumerable<string> values = TestTree.ReadPostOrder();
+
+            // assert
+            Assert.Equal(new []{"a", "h", "f", "z", "k", "j"}, values);
         }
     }
 }
